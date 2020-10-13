@@ -3,6 +3,10 @@ from torch import nn
 
 
 class Model(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+
     def save(self, path: str):
         d = self.state_dict()
         with open(path, "wb") as f:
