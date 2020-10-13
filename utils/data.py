@@ -1,3 +1,6 @@
+from typing import List
+
+import torch
 from torch.utils import data
 
 
@@ -22,3 +25,9 @@ class ShuffleLoopDataset(data.IterableDataset):
         except StopIteration:
             self.samples = None
             return next(self)
+
+
+def interleave(*tensor_sequences: List[torch.Tensor]) -> List[torch.Tensor]:
+    tensors = [torch.cat(seq, dim=0) for seq in tensor_sequences]
+    indices = torch.randperm(tensors[0].shape[0])
+    return [x[indices] for x in tensors]
