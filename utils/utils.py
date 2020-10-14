@@ -10,6 +10,6 @@ def read_config(path: str) -> DotMap:
     with open(path) as f:
         src = f.read()
     d = yaml.safe_load(src)
-    d._src = src
     d = DotMap(d)
+    d._src = src
     return d
