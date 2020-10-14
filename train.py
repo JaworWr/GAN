@@ -44,6 +44,7 @@ def main():
     try:
         trainer.train()
     finally:
+        print("Saving...")
         if args.disc_save_path is not None:
             discriminator.save(args.disc_save_path)
         if args.gen_save_path is not None:
