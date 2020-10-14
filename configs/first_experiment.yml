@@ -1,0 +1,28 @@
+data:
+  module_name: data_loaders.mnist
+  class_name: MnistDataLoaderFactory
+  root: /tmp/data
+  batch_size: 64
+
+discriminator:
+  module_name: models.conv_discriminator
+  class_name: ConvDiscriminator
+  dropout: 0.3
+
+generator:
+  module_name: models.conv_generator
+  class_name: ConvGenerator
+
+trainer:
+  module_name: trainers.default_trainer
+  class_name: DefaultTrainer
+  checkpoint_steps: 100
+  discriminator:
+    training_batches: 5
+    lr: 1.0e-4
+  generator:
+    training_batches: 5
+    lr: 1.0e-4
+  steps: 2000
+
+device: cuda
