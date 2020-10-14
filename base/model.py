@@ -12,7 +12,7 @@ class Model(nn.Module):
         with open(path, "wb") as f:
             torch.save(d, f)
 
-    def load(self, path: str):
+    def load(self, path: str, **kwargs):
         with open(path, "rb") as f:
-            d = torch.load(f)
+            d = torch.load(f, **kwargs)
         self.load_state_dict(d)
