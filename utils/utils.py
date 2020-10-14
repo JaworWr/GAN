@@ -12,5 +12,6 @@ def read_config(path: str) -> Tuple[DotMap, str]:
     with open(path) as f:
         src = f.read()
     d = yaml.safe_load(src)
+    d._src = src
     d = DotMap(d)
-    return d, src
+    return d
