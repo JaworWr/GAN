@@ -6,7 +6,7 @@ from base.discriminator import BaseDiscriminator
 from base.generator import BaseGenerator
 from base.trainer import BaseTrainer
 from utils.factory import get_class
-from utils.utils import read_config
+from utils.utils import read_config, experiment_init
 
 
 def parse_args():
@@ -24,6 +24,8 @@ def main():
     args = parse_args()
     config = read_config(args.config)
 
+    experiment_paths = experiment_init(config)
+
     disc_cls: Type[BaseDiscriminator] = get_class(config.discriminator.module_name, config.discriminator.class_name)
     gen_cls: Type[BaseGenerator] = get_class(config.generator.module_name, config.generator.class_name)
     discriminator = disc_cls(config)
@@ -37,8 +39,8 @@ def main():
     dl = dl_cls.get_data_loader(config)
 
     trainer_cls: Type[BaseTrainer] = get_class(config.trainer.module_name, config.trainer.class_name)
-    trainer = trainer_cls(config, dl, discriminator, generator, disc_save_path=args.disc_save_path,
-                          disc_load_path=args.disc_load_path)
+    trainer = trainer_cls(config, dl, discriminator, generator, experiment_paths["checkpoint_path"],
+                          disc_save_path=args.disc_save_path, disc_load_path=args.disc_load_path)
 
     print("Training...")
     try:

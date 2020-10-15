@@ -25,4 +25,7 @@ trainer:
     lr: 1.0e-4
   steps: 2000
 
+experiment:
+  save: True
+
 device: cuda

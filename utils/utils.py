@@ -1,3 +1,7 @@
+import os
+from datetime import datetime
+from typing import Union, Dict
+
 import yaml
 from dotmap import DotMap
 
@@ -13,3 +17,24 @@ def read_config(path: str) -> DotMap:
     d = DotMap(d)
     d._src = src
     return d
+
+
+def experiment_init(config) -> Dict[str, Union[str, None]]:
+    if config.experiment.save:
+        experiment_root = config.experiment.get("root", "experiments")
+        experiment_name = config.experiment.get("name", datetime.now().strftime("%Y-%m-%d_%H:%M:%S"))
+        checkpoint_path = os.path.join(experiment_root, experiment_name, "model_checkpoints")
+        log_path = os.path.join(experiment_root, experiment_name, "logs")
+        os.makedirs(checkpoint_path)
+        os.makedirs(log_path)
+        with open(os.path.join(experiment_root, experiment_name, "config.yml"), "w") as out:
+            out.write(config._src)
+        return {
+            "checkpoint_path": checkpoint_path,
+            "log_path": log_path,
+        }
+    else:
+        return {
+            "checkpoint_path": None,
+            "log_path": None,
+        }

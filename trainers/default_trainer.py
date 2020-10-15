@@ -11,8 +11,9 @@ from utils.data import interleave
 
 class DefaultTrainer(BaseTrainer):
 
-    def __init__(self, config, data: DataLoader, discriminator: BaseDiscriminator, generator: BaseGenerator, **kwargs):
-        super().__init__(config, data, discriminator, generator)
+    def __init__(self, config, data: DataLoader, discriminator: BaseDiscriminator, generator: BaseGenerator,
+                 checkpoint_path: str, **kwargs):
+        super().__init__(config, data, discriminator, generator, checkpoint_path, **kwargs)
         self.disc_optimizer = torch.optim.Adam(discriminator.parameters(), config.trainer.discriminator.lr)
         self.gen_optimizer = torch.optim.Adam(generator.parameters(), config.trainer.generator.lr)
         self.disc_save_path = kwargs.get("disc_save_path")
