@@ -5,9 +5,9 @@ data:
   batch_size: 128
 
 discriminator:
-  module_name: models.conv_discriminator
+  module_name: models.conv_discriminator_large
   class_name: ConvDiscriminator
-  dropout: 0.4
+  dropout: 0.5
 
 generator:
   module_name: models.conv_generator
