@@ -11,13 +11,16 @@ class ConvDiscriminator(BaseDiscriminator):
         self.layers = nn.Sequential(
             nn.Conv2d(1, 64, 5),  # 64 x 24 x 24
             nn.ReLU(),
-            nn.MaxPool2d(2),  # 64 x 12 x 12
             nn.Dropout(p_dropout),
-            nn.Conv2d(64, 128, 5),  # 128 x 8 x 8
+            nn.Conv2d(64, 64, 5),  # 64 x 20 x 20
+            nn.ReLU(),
+            nn.MaxPool2d(2),  # 64 x 10 x 10
+            nn.Dropout(p_dropout),
+            nn.Conv2d(64, 128, 5),  # 128 x 6 x 6
             nn.ReLU(),
             nn.Dropout(p_dropout),
             nn.Flatten(),
-            nn.Linear(128 * 8 * 8, 1),
+            nn.Linear(128 * 6 * 6, 1),
             nn.Sigmoid(),
         )
 
