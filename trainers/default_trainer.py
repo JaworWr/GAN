@@ -69,3 +69,5 @@ class DefaultTrainer(BaseTrainer):
 
             if self.config.trainer.checkpoint_steps and step % self.config.trainer.checkpoint_steps == 0:
                 self.make_checkpoint()
+        if self.config.trainer.checkpoint_steps:
+            self.make_checkpoint()
