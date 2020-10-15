@@ -39,7 +39,7 @@ def main():
     dl = dl_cls.get_data_loader(config)
 
     trainer_cls: Type[BaseTrainer] = get_class(config.trainer.module_name, config.trainer.class_name)
-    trainer = trainer_cls(config, dl, discriminator, generator, experiment_paths["checkpoint_path"],
+    trainer = trainer_cls(config, dl, discriminator, generator, **experiment_paths,
                           disc_save_path=args.disc_save_path, disc_load_path=args.disc_load_path)
 
     print("Training...")

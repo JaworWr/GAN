@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from typing import Union, Dict
+from typing import Dict, Optional
 
 import yaml
 from dotmap import DotMap
@@ -19,7 +19,7 @@ def read_config(path: str) -> DotMap:
     return d
 
 
-def experiment_init(config) -> Dict[str, Union[str, None]]:
+def experiment_init(config) -> Dict[str, Optional[str]]:
     if config.experiment.save:
         experiment_root = config.experiment.get("root", "experiments")
         experiment_name = config.experiment.get("name", datetime.now().strftime("%Y-%m-%d_%H:%M:%S"))
