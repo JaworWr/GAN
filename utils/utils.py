@@ -19,7 +19,7 @@ def read_config(path: str) -> DotMap:
     return d
 
 
-def experiment_init(config) -> Dict[str, Optional[str]]:
+def experiment_init(config, args: Dict) -> Dict[str, Optional[str]]:
     if config.experiment.save:
         experiment_root = config.experiment.get("root", "experiments")
         experiment_name = config.experiment.get("name", datetime.now().strftime("%Y-%m-%d_%H:%M:%S"))
@@ -28,7 +28,9 @@ def experiment_init(config) -> Dict[str, Optional[str]]:
         os.makedirs(checkpoint_path)
         os.makedirs(log_path)
         with open(os.path.join(experiment_root, experiment_name, "config.yml"), "w") as out:
-            out.write(config._src)
+            out.write(config._src + "\n")
+            for key, value in args.items():
+                out.write(f"# {key} = {value}\n")
         return {
             "checkpoint_path": checkpoint_path,
             "log_path": log_path,

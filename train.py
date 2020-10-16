@@ -24,7 +24,7 @@ def main():
     args = parse_args()
     config = read_config(args.config)
 
-    experiment_paths = experiment_init(config)
+    experiment_paths = experiment_init(config, vars(args))
 
     disc_cls: Type[BaseDiscriminator] = get_class(config.discriminator.module_name, config.discriminator.class_name)
     gen_cls: Type[BaseGenerator] = get_class(config.generator.module_name, config.generator.class_name)
