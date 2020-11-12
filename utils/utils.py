@@ -22,7 +22,7 @@ def read_config(path: str) -> DotMap:
 def experiment_init(config, args: Dict) -> Dict[str, Optional[str]]:
     if config.experiment.save:
         experiment_root = config.experiment.get("root", "experiments")
-        experiment_name = config.experiment.get("name", datetime.now().strftime("%Y-%m-%d_%H:%M:%S"))
+        experiment_name = config.experiment.get("name", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
         checkpoint_path = os.path.join(experiment_root, experiment_name, "model_checkpoints")
         log_path = os.path.join(experiment_root, experiment_name, "logs")
         os.makedirs(checkpoint_path)
