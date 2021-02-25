@@ -7,7 +7,7 @@ data:
 discriminator:
   module_name: models.conv_discriminator
   class_name: ConvDiscriminator
-  dropout: 0.4
+  dropout: 0.5
 
 generator:
   module_name: models.conv_generator
@@ -16,14 +16,15 @@ generator:
 trainer:
   module_name: trainers.default_trainer
   class_name: DefaultTrainer
-  checkpoint_steps: 100
+  checkpoint_steps: 200
+  label_smoothing: 0.8
   discriminator:
     training_batches: 1
-    lr: 1.0e-4
-  generator:
-    training_batches: 2
     lr: 2.0e-4
-  steps: 3000
+  generator:
+    training_batches: 1
+    lr: 1.0e-4
+  steps: 10000
 
 experiment:
   save: True

@@ -45,13 +45,14 @@ class DefaultTrainer(BaseTrainer):
         self.discriminator.train()
         self.generator.eval()
         bs = self.config.data.batch_size
+        c = self.config.trainer.get("label_smoothing", 1)
         step_losses = []
         for iter_ in range(self.config.trainer.discriminator.get("training_batches", 1)):
             X_true = next(data_iter).to(self.device)
             with torch.no_grad():
                 X_fake = self.generator.generate_batch(bs, self.device)
             X, y = interleave([X_true, X_fake],
-                              [torch.ones((bs, 1), device=self.device), torch.zeros((bs, 1), device=self.device)])
+                              [c * torch.ones((bs, 1), device=self.device), torch.zeros((bs, 1), device=self.device)])
             pred = self.discriminator(X)
             loss = self.discriminator_loss(pred, y)
             loss.backward()
