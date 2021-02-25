@@ -11,7 +11,7 @@ from utils.utils import read_config, experiment_init
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", help="Path to the configuration", required=True, type=str)
+    parser.add_argument("-c", "--config", help="Path to the configuration", required=True, type=str)
     parser.add_argument("--disc-save-path", help="Discriminator save path", type=str)
     parser.add_argument("--disc-load-path", help="Discriminator load path", type=str)
     parser.add_argument("--gen-save-path", help="Generator save path", type=str)
