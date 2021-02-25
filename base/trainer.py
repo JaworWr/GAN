@@ -1,6 +1,8 @@
 import os
 
+import torch
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from base.discriminator import BaseDiscriminator
 from base.generator import BaseGenerator
@@ -22,8 +24,45 @@ class BaseTrainer:
         self.checkpoint_path = checkpoint_path
         self.n_checkpoints = 0
 
-    def train(self):
+    @classmethod
+    def discriminator_loss(cls, pred, target):
         raise NotImplementedError
+
+    @classmethod
+    def generator_loss(cls, pred):
+        raise NotImplementedError
+
+    @property
+    def discriminator_optimizer(self) -> torch.optim.Optimizer:
+        raise NotImplementedError
+
+    @property
+    def generator_optimizer(self) -> torch.optim.Optimizer:
+        raise NotImplementedError
+
+    def discriminator_step(self, data_iter, step):
+        raise NotImplementedError
+
+    def generator_step(self, data_iter, step):
+        raise NotImplementedError
+
+    def training_step(self, data_iter, step):
+        self.discriminator_optimizer.zero_grad()
+        self.generator_optimizer.zero_grad()
+        self.discriminator_step(data_iter, step)
+        self.discriminator_optimizer.step()
+        self.generator_step(data_iter, step)
+        self.generator_optimizer.step()
+
+        if self.config.trainer.checkpoint_steps and step % self.config.trainer.checkpoint_steps == 0:
+            self.make_checkpoint()
+
+    def train(self):
+        data_iter = iter(self.data)
+        for step in tqdm(range(self.config.trainer.steps)):
+            self.training_step(data_iter, step)
+        if self.config.trainer.checkpoint_steps:
+            self.make_checkpoint()
 
     def make_checkpoint(self):
         if self.checkpoint_path is not None:
