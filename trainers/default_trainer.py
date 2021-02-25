@@ -56,7 +56,7 @@ class DefaultTrainer(BaseTrainer):
             self.discriminator.eval()
             self.generator.train()
             step_losses = []
-            for iter_ in range(self.config.trainer.generator.training_batches):
+            for iter_ in range(self.config.trainer.generator.get("training_batches", 1)):
                 self.gen_optimizer.zero_grad()
                 X = self.generator.generate_batch(bs, self.device)
                 pred = self.discriminator(X)

@@ -6,7 +6,7 @@ from base.discriminator import BaseDiscriminator
 from base.generator import BaseGenerator
 from base.trainer import BaseTrainer
 from utils.factory import get_class
-from utils.utils import read_config, experiment_init
+from utils.misc import read_config, experiment_init
 
 
 def parse_args():
