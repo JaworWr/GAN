@@ -14,8 +14,9 @@ class DefaultTrainer(BaseTrainer):
     def __init__(self, config, data: DataLoader, discriminator: BaseDiscriminator, generator: BaseGenerator,
                  checkpoint_path: str, **kwargs):
         super().__init__(config, data, discriminator, generator, checkpoint_path, **kwargs)
-        self._disc_optimizer = torch.optim.Adam(discriminator.parameters(), config.trainer.discriminator.lr)
-        self._gen_optimizer = torch.optim.Adam(generator.parameters(), config.trainer.generator.lr)
+        self._disc_optimizer = torch.optim.Adam(discriminator.parameters(),
+                                                **config.trainer.discriminator.optimizer_args)
+        self._gen_optimizer = torch.optim.Adam(generator.parameters(), **config.trainer.generator.optimizer_args)
         log_path = kwargs.get("log_path")
         if log_path is not None:
             self.summary_writer = SummaryWriter(log_dir=log_path)

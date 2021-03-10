@@ -3,23 +3,23 @@ from torch import nn
 from base.discriminator import BaseDiscriminator
 
 
-class ConvDiscriminator(BaseDiscriminator):
+class ConvDiscriminatorLarge(BaseDiscriminator):
 
     def __init__(self, config):
         super().__init__(config)
-        p_dropout = config.discriminator.get("dropout", 0)
         self.layers = nn.Sequential(
-            nn.Conv2d(1, 32, 3),  # 32 x 26 x 26
+            nn.Conv2d(1, 64, 5),  # 64 x 24 x 24
             nn.ReLU(),
-            nn.Dropout(p_dropout),
-            nn.Conv2d(32, 32, 3),  # 32 x 24 x 24
-            nn.MaxPool2d(2),  # 32 x 12 x 12
-            nn.Dropout(p_dropout),
-            nn.Conv2d(32, 64, 5),  # 64 x 8 x 8
+            nn.MaxPool2d(2),  # 64 x 12 x 12
+            nn.BatchNorm2d(64),
+            nn.Conv2d(64, 128, 5),  # 128 x 8 x 8
             nn.ReLU(),
-            nn.Dropout(p_dropout),
+            nn.BatchNorm2d(128),
             nn.Flatten(),
-            nn.Linear(64 * 8 * 8, 1),
+            nn.Linear(128 * 8 * 8, 128),
+            nn.ReLU(),
+            nn.BatchNorm1d(128),
+            nn.Linear(128, 1),
             nn.Sigmoid(),
         )
 

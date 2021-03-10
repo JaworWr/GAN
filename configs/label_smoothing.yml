@@ -20,10 +20,12 @@ trainer:
   label_smoothing: 0.8
   discriminator:
     training_batches: 1
-    lr: 2.0e-4
+    optimizer_args:
+      lr: 2.0e-4
   generator:
     training_batches: 1
-    lr: 1.0e-4
+    optimizer_args:
+      lr: 1.0e-4
   steps: 10000
 
 experiment:

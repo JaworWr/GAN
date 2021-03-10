@@ -19,10 +19,12 @@ trainer:
   checkpoint_steps: 100
   discriminator:
     training_batches: 1
-    lr: 1.0e-4
+    optimizer_args:
+      lr: 1.0e-4
   generator:
     training_batches: 2
-    lr: 2.0e-4
+    optimizer_args:
+      lr: 2.0e-4
   steps: 3000
 
 experiment:
