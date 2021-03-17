@@ -24,14 +24,6 @@ class BaseTrainer:
         self.checkpoint_path = checkpoint_path
         self.n_checkpoints = 0
 
-    @classmethod
-    def discriminator_loss(cls, pred, target):
-        raise NotImplementedError
-
-    @classmethod
-    def generator_loss(cls, pred):
-        raise NotImplementedError
-
     @property
     def discriminator_optimizer(self) -> torch.optim.Optimizer:
         raise NotImplementedError
