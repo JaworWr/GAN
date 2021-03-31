@@ -127,5 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/trained_models/
-/model_checkpoints/
+
+# experiment data
+data
+experiments
+trained_models
+model_checkpoints
+
+# PyCharm configs
+.idea
