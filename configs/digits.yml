@@ -5,13 +5,13 @@ data:
   batch_size: 128
 
 discriminator:
-  module_name: models.labeled.conv_discriminator
-  class_name: ConvDiscriminator
+  module_name: models.labeled.conv_discriminator_v3
+  class_name: ConvDiscriminatorV3
 #  dropout: 0.5
 
 generator:
-  module_name: models.labeled.conv_generator_v2
-  class_name: ConvGeneratorV2
+  module_name: models.labeled.conv_generator_v3
+  class_name: ConvGeneratorV3
 
 trainer:
   module_name: trainers.labeled.discriminator_noise
@@ -28,7 +28,7 @@ trainer:
     optimizer_args:
       lr: 1.0e-4
       weight_decay: 1.0e-2
-  steps: 2000
+  steps: 6000
 
 experiment:
   save: True
