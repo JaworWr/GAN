@@ -1,0 +1,37 @@
+data:
+  module_name: data_loaders.mnist_labeled
+  class_name: MnistDataLoaderFactory
+  root: ./data
+  batch_size: 128
+
+discriminator:
+  module_name: models.labeled.conv_discriminator_v5
+  class_name: ConvDiscriminatorV5
+#  dropout: 0.5
+
+generator:
+  module_name: models.labeled.conv_generator_v3
+  class_name: ConvGeneratorV3
+
+trainer:
+  module_name: trainers.labeled.discriminator_noise_sigmoid
+  class_name: DiscriminatorNoiseSigmoidTrainer
+  checkpoint_steps: 50
+  noise_sigma: 0.2
+  label_smoothing: 0.9
+  discriminator:
+    training_batches: 1
+    optimizer_args:
+      lr: 3.0e-4
+      weight_decay: 1.0e-3
+  generator:
+    training_batches: 1
+    optimizer_args:
+      lr: 1.0e-4
+      weight_decay: 1.0e-2
+  steps: 6000
+
+experiment:
+  save: True
+
+device: cuda
