@@ -10,25 +10,25 @@ discriminator:
 #  dropout: 0.5
 
 generator:
-  module_name: models.labeled.conv_generator
-  class_name: ConvGenerator
+  module_name: models.labeled.conv_generator_v2
+  class_name: ConvGeneratorV2
 
 trainer:
   module_name: trainers.labeled.discriminator_noise
   class_name: DiscriminatorNoiseTrainer
-  checkpoint_steps: 100
+  checkpoint_steps: 50
   noise_sigma: 0.2
   discriminator:
     training_batches: 1
     optimizer_args:
       lr: 2.0e-4
-      weight_decay: 1.0e-4
+      weight_decay: 1.0e-3
   generator:
     training_batches: 1
     optimizer_args:
       lr: 1.0e-4
-      weight_decay: 1.0e-4
-  steps: 6000
+      weight_decay: 1.0e-2
+  steps: 2000
 
 experiment:
   save: True

@@ -43,7 +43,6 @@ class DiscriminatorNoiseTrainer(BaseTrainer):
         self.discriminator.train()
         self.generator.eval()
         bs = self.config.data.batch_size
-        c = self.config.trainer.get("label_smoothing", 1)
         step_losses = []
         for iter_ in range(self.config.trainer.discriminator.get("training_batches", 1)):
             X_true, y_true = next(data_iter)
